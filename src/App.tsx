@@ -1,8 +1,26 @@
-
+import { Routes, Route } from "react-router";
+import Header from "./comps/Header";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Play from "./pages/Play";
+import Leaderboard from "./pages/Leaderboard";
+import AdminRiddles from "./pages/AdminRiddles";
 
 export default function App() {
   return (
-    <div>App</div>
-  )
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/play" element={<Play />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/admin" element={<AdminRiddles />} />
+      </Routes>
+    </>
+  );
 }
+
 
