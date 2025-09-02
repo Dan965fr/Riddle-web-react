@@ -1,5 +1,10 @@
 export default function Play() {
   return (
-    <h2>Play Page</h2>
+    <div>
+       <h2>Play Page</h2> 
+       <p>Here the riddle will appear. Click to start</p>
+       <button>Start Riddles</button>
+    </div>
+    
   )
 }
