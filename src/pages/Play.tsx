@@ -12,7 +12,6 @@ interface Riddle {
   correctAnswer: string;
   choices?: string[];
 }
-
 interface Player {
   id: string;
   username: string;
@@ -24,37 +23,43 @@ const PlayPage: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [playerName, setPlayerName] = useState("");
-  const [gameStarted, setGameStarted] = useState(false);
+  const [tempName, setTempName] = useState("");
   const [gameFinished, setGameFinished] = useState(false);
+
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     const fetchRiddles = async () => {
-      const data = await getAllRiddles();
+      const data = await getAllRiddles(token);
       setRiddles(data);
     };
     fetchRiddles();
-  }, []);
+  }, [token]);
+
+  const handleStartGame = () => {
+    setPlayerName(tempName || "Guest");
+  };
 
   const handleAnswerCorrect = async (timeTaken: number) => {
-    setTotalTime((prev) => prev + timeTaken);
+    setTotalTime(prev => prev + timeTaken);
 
     if (currentIndex + 1 < riddles.length) {
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex(prev => prev + 1);
     } else {
-      // סיימנו את כל החידות
       setGameFinished(true);
 
-      try {
-        const allPlayers = await getAllPlayers();
-        const player = allPlayers.find(
-          (p: Player) => p.username.toLowerCase() === playerName.toLowerCase()
-        );
-
-        if (player) {
-          await updatePlayerTime(player.id, totalTime + timeTaken);
+      if (token) {
+        try {
+          const allPlayers = await getAllPlayers(token);
+          const player = allPlayers.find(
+            (p: Player) => p.username.toLowerCase() === playerName.toLowerCase()
+          );
+          if (player) {
+            await updatePlayerTime(player.id, totalTime + timeTaken, token);
+          }
+        } catch (err) {
+          console.error("Error updating player time:", err);
         }
-      } catch (err) {
-        console.error("Error updating player time:", err);
       }
     }
   };
@@ -64,34 +69,21 @@ const PlayPage: React.FC = () => {
   return (
     <div className="play-page">
       <TopBar leftText="Play" />
-
       <div className="play-content">
-        {/* מסך בחירת שם והתחלת המשחק */}
-        {!gameStarted && (
+        {!playerName && !gameFinished && (
           <div className="player-name-form">
             <h2>Enter your name to start:</h2>
             <input
               type="text"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
+              value={tempName}
+              onChange={e => setTempName(e.target.value)}
               placeholder="Your name..."
             />
-            <button
-              onClick={() => {
-                if (playerName.trim() !== "") {
-                  setGameStarted(true);
-                } else {
-                  alert("Please enter a valid name");
-                }
-              }}
-            >
-              Start
-            </button>
+            <button onClick={handleStartGame}>Start Game</button>
           </div>
         )}
 
-        {/* חידות במהלך המשחק */}
-        {gameStarted && !gameFinished && playerName && (
+        {playerName && !gameFinished && (
           <>
             <h2>
               Riddle {currentIndex + 1} / {riddles.length}
@@ -103,7 +95,6 @@ const PlayPage: React.FC = () => {
           </>
         )}
 
-        {/* מסך סיום */}
         {gameFinished && (
           <div className="finish-screen">
             <h2>Well done {playerName}!</h2>
@@ -111,13 +102,13 @@ const PlayPage: React.FC = () => {
           </div>
         )}
       </div>
-
       <Footer />
     </div>
   );
 };
 
 export default PlayPage;
+
 
 
 
