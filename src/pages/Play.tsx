@@ -1,50 +1,123 @@
-import { useState } from "react";
-import { Link } from "react-router";
-import './Play.css';
+import React, { useEffect, useState } from "react";
+import TopBar from "../comps/Top-bar";
+import Footer from "../comps/Footer";
+import RiddleCard from "../comps/RiddleCard";
+import { getAllRiddles } from "../services/riddleService";
+import { getAllPlayers, updatePlayerTime } from "../services/playerService";
+import "./Play.css";
 
-const riddles = [
-  { question: "What has keys but can't open locks?", difficulty: "Easy" },
-  { question: "I speak without a mouth. What am I?", difficulty: "Medium" },
-  { question: "What runs but never walks?", difficulty: "Hard" }
-];
+interface Riddle {
+  id: string;
+  taskDescription: string;
+  correctAnswer: string;
+  choices?: string[];
+}
 
-export default function Play() {
-  const [index, setIndex] = useState(0);
-  const [answer, setAnswer] = useState("");
+interface Player {
+  id: string;
+  username: string;
+  best_time?: number;
+}
 
-  const nextRiddle = () => {
-    setIndex((prev) => (prev + 1) % riddles.length);
-    setAnswer("");
+const PlayPage: React.FC = () => {
+  const [riddles, setRiddles] = useState<Riddle[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
+  const [playerName, setPlayerName] = useState("");
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameFinished, setGameFinished] = useState(false);
+
+  useEffect(() => {
+    const fetchRiddles = async () => {
+      const data = await getAllRiddles();
+      setRiddles(data);
+    };
+    fetchRiddles();
+  }, []);
+
+  const handleAnswerCorrect = async (timeTaken: number) => {
+    setTotalTime((prev) => prev + timeTaken);
+
+    if (currentIndex + 1 < riddles.length) {
+      setCurrentIndex((prev) => prev + 1);
+    } else {
+      // סיימנו את כל החידות
+      setGameFinished(true);
+
+      try {
+        const allPlayers = await getAllPlayers();
+        const player = allPlayers.find(
+          (p: Player) => p.username.toLowerCase() === playerName.toLowerCase()
+        );
+
+        if (player) {
+          await updatePlayerTime(player.id, totalTime + timeTaken);
+        }
+      } catch (err) {
+        console.error("Error updating player time:", err);
+      }
+    }
   };
 
-  const submitAnswer = () => {
-    console.log("Answer submitted:", answer);
-    nextRiddle();
-  };
+  if (riddles.length === 0) return <p>Loading riddles...</p>;
 
   return (
     <div className="play-page">
-      <div className="play-topbar">
-        <Link to="/" className="play-top-left">Home</Link>
-        <Link to="/leaderboard" className="play-top-right">Leaderboard</Link>
+      <TopBar leftText="Play" />
+
+      <div className="play-content">
+        {/* מסך בחירת שם והתחלת המשחק */}
+        {!gameStarted && (
+          <div className="player-name-form">
+            <h2>Enter your name to start:</h2>
+            <input
+              type="text"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              placeholder="Your name..."
+            />
+            <button
+              onClick={() => {
+                if (playerName.trim() !== "") {
+                  setGameStarted(true);
+                } else {
+                  alert("Please enter a valid name");
+                }
+              }}
+            >
+              Start
+            </button>
+          </div>
+        )}
+
+        {/* חידות במהלך המשחק */}
+        {gameStarted && !gameFinished && playerName && (
+          <>
+            <h2>
+              Riddle {currentIndex + 1} / {riddles.length}
+            </h2>
+            <RiddleCard
+              riddle={riddles[currentIndex]}
+              onAnswerCorrect={handleAnswerCorrect}
+            />
+          </>
+        )}
+
+        {/* מסך סיום */}
+        {gameFinished && (
+          <div className="finish-screen">
+            <h2>Well done {playerName}!</h2>
+            <p>Total time: {totalTime} seconds</p>
+          </div>
+        )}
       </div>
 
-      <div className="play-center">
-        <h2>Play</h2>
-        <p>Difficulty: {riddles[index].difficulty}</p>
-        <p>{riddles[index].question}</p>
-        <input
-          type="text"
-          placeholder="Your answer"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-        />
-        <button onClick={submitAnswer}>Submit</button>
-        <p>{index + 1}/{riddles.length} riddles answered</p>
-      </div>
-
-      <footer className="play-footer">v1.0</footer>
+      <Footer />
     </div>
   );
-}
+};
+
+export default PlayPage;
+
+
 

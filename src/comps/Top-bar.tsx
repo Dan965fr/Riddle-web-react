@@ -1,7 +1,7 @@
 // src/components/TopBar.tsx
 import React from "react";
 import { Link } from "react-router";
-import './TopBar.css';
+import './Top-bar.css';
 
 interface TopBarProps {
   leftText?: string;

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: linear-gradient(to right,#4b6cb7,#182848);
+  background: linear-gradient(to right, #4b6cb7, #182848);
   color: #fff;
   font-family: Arial, sans-serif;
 }
@@ -10,49 +10,91 @@
 .play-topbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 30px;
   font-size: 0.9rem;
+  background: rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-.play-top-left, .play-top-right {
+.play-top-left,
+.play-top-right {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
 
-.play-center {
+.play-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
 }
 
-.play-center input {
+.player-name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.player-name-form input {
   padding: 10px;
   border-radius: 6px;
   border: none;
   width: 250px;
+  font-size: 1rem;
 }
 
-.play-center button {
-  padding: 10px 20px;
+.player-name-form button {
+  padding: 10px 25px;
   border-radius: 8px;
   border: none;
   background-color: #ff6f61;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-.play-center button:hover {
+.player-name-form button:hover {
   background-color: #e65b50;
+}
+
+.riddle-card-wrapper {
+  width: 100%;
+  max-width: 500px;
+}
+
+.finish-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.finish-screen h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.finish-screen p {
+  font-size: 1.2rem;
+  color: #ffd700;
 }
 
 .play-footer {
   text-align: center;
   padding: 10px 0;
   font-size: 0.9rem;
+  background: rgba(0,0,0,0.2);
 }
 
