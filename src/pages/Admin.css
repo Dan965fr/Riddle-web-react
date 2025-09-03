@@ -1,0 +1,47 @@
+.admin-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+}
+
+.admin-container input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+
+.admin-container button {
+  background-color: #ff9f1c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-container button:hover {
+  background-color: #e88b00;
+}
+
+.admin-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.admin-container li {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 6px;
+}

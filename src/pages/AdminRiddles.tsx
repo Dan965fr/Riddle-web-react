@@ -1,8 +1,9 @@
 import { useState } from "react";
+import './Admin.css'
 
 export default function AdminRiddles() {
-  const [riddles, setRiddles] = useState(["Riddle 1", "Riddle 2"]);
-  const [newRiddle, setNewRiddle] = useState("");
+  const [riddles, setRiddles] = useState<string[]>(["Riddle 1", "Riddle 2"]);
+  const [newRiddle, setNewRiddle] = useState<string>("");
 
   const addRiddle = () => {
     if (newRiddle.trim() !== "") {
@@ -12,7 +13,7 @@ export default function AdminRiddles() {
   };
 
   return (
-    <div>
+    <div className="admin-container">
       <h2>Admin Riddles</h2>
       <input
         value={newRiddle}

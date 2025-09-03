@@ -1,0 +1,10 @@
+.leaderboard-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(255,255,255,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  color: #fff;
+  text-align: center;
+}
