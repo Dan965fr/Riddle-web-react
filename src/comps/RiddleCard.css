@@ -1,0 +1,29 @@
+.riddle-card {
+  background-color: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.riddle-card input {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.riddle-card button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff6f61;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.riddle-card button:hover {
+  background-color: #e65b50;
+}

@@ -1,0 +1,21 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.topbar-left {
+  font-weight: bold;
+}
+
+.topbar-right a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.topbar-right a:hover {
+  text-decoration: underline;
+}
