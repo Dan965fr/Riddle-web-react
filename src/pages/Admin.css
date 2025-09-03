@@ -1,47 +1,95 @@
-.admin-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 25px;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(135deg, #3a3d98, #2e2e7e);
   color: #fff;
-  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-.admin-container input {
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
+/* Top bar */
+.admin-topbar {
+  display: flex;
+  justify-content: flex-start;
+  padding: 15px 30px;
+  font-size: 0.9rem;
 }
 
-.admin-container button {
-  background-color: #ff9f1c;
+.admin-top-left {
   color: #fff;
-  border: none;
-  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.admin-top-left:hover {
+  color: #ff9f1c;
+}
+
+/* Center content */
+.admin-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.admin-center h2 {
+  margin-bottom: 10px;
+}
+
+/* Table styling */
+.admin-center table {
+  width: 100%;
+  max-width: 700px;
+  border-collapse: collapse;
+  background-color: rgba(255,255,255,0.1);
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
+  overflow: hidden;
 }
 
-.admin-container button:hover {
-  background-color: #e88b00;
+.admin-center th, .admin-center td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
-.admin-container ul {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 20px;
+.admin-center th {
+  background-color: rgba(0,0,0,0.3);
+  font-weight: bold;
 }
 
-.admin-container li {
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 8px 12px;
-  margin: 6px 0;
+.admin-center tr:nth-child(even) {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.admin-center tr:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Actions buttons */
+.actions button {
+  margin: 0 3px;
+  padding: 6px 10px;
   border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #6c63ff;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.actions button:hover {
+  background-color: #5751d9;
+}
+
+/* Footer */
+.admin-footer {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
 }

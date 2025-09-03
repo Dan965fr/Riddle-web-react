@@ -1,0 +1,22 @@
+.header {
+  background-color: linear-gradient(to right,#4b6cb7,#182848);
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.header nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header a:hover {
+  color: #ff9f1c;
+}
